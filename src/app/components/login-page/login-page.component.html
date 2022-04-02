@@ -1,1 +1,26 @@
-<p>login-page works!</p>
+<div class="container">
+
+    <div class="form-container">
+        
+            <h2 class="form-title">Compila il form con i tuoi dati</h2>
+    
+            <mat-form-field class="color-text">
+                <mat-label class="text">Username</mat-label>
+                <input matInput type="text" [(ngModel)]="loginData.username">
+            </mat-form-field>
+
+
+            <mat-form-field >
+                <mat-label class="text">Password</mat-label>
+                <input matInput type="password" [(ngModel)]="loginData.password">
+            </mat-form-field>
+            
+                <button (click)="submit()" mat-raised-button class="submitButton" color="primary" type="submit">INVIA</button>
+                <div *ngIf="!found">Non ti ho trovato </div>
+  
+
+    </div>
+
+    
+</div>
+

@@ -1,10 +1,11 @@
 <div class="container">
-  <mat-toolbar color="accent">
+  <mat-toolbar color="primary">
     <span>{{title}}</span>
     <span class="spacer"></span>
     <button routerLink="home" mat-flat-button color="accent">First page</button>
     <button routerLink="private" mat-flat-button color="accent">Second page</button>
-    <button routerLink="login" mat-flat-button color="accent">Login / Signup</button>
+    <button *ngIf="!logged" routerLink="login" mat-flat-button color="accent">Login / Signup</button>
+    <button *ngIf="logged" mat-flat-button color="accent">Logout</button>
   </mat-toolbar>
   <div class="page-content">
     <router-outlet></router-outlet>
