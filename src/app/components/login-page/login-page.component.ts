@@ -1,4 +1,5 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ApiService } from 'src/app/service/api.service';
 
@@ -9,40 +10,60 @@ import { ApiService } from 'src/app/service/api.service';
 })
 export class LoginPageComponent implements OnInit {
 
-  public loginData = {username: '', password: ''};
-  public found:boolean=true;
+  // public loginData = { username: '', password: '' };
+  // public found: boolean = true;
+  // public loggedUser: boolean = false
+  // @Output() logged: EventEmitter<boolean> = new EventEmitter();
 
-  public loggedUser:boolean=false
+  public logged: boolean = true;
 
-  @Output() logged: EventEmitter<boolean> = new EventEmitter();
+  public loginForm = new FormGroup({
+    username: new FormControl('', [Validators.required]),
+    password: new FormControl('', [Validators.required])
+  });
 
-
-
-  constructor(private api:ApiService, private router: Router) {
-
-   }
+  constructor(private api: ApiService, private router: Router) { }
 
   ngOnInit(): void {
 
-    
-
   }
 
+  get f(){
+    return this.loginForm.controls;
+  }
   
   submit(){
-
-  for (const user of this.api.allUsers) {
-    
-    if(user.username === this.loginData.username && user.password === this.loginData.password){
-      this.router.navigate(['/private']);
-      this.loggedUser=true
-      this.logged.emit(this.loggedUser)
-
-     break;
-    }
+    this.api.checkUserLogin(this.loginForm.value).subscribe({
+      next: res => {
+        const user = res.find((a: any) => {
+          return a.username === this.loginForm.value.username && a.password === this.loginForm.value.password
+        });
+        if (user) {
+          //alert('Login Succesful');
+          this.loginForm.reset();
+          this.api.loginState$.next(true);
+          this.router.navigate(['private']);
+        } else {
+          //alert("user not found");
+          this.logged = false;
+        }
+      },
+      error: () => {
+        alert("Something went wrong")
+      }
+    });
   }
- return this.found = false;
-  }
 
+  // submit() {
+  //   for (const user of this.api.allUsers) {
+  //     if (user.username === this.loginData.username && user.password === this.loginData.password) {
+  //       this.router.navigate(['/private']);
+  //       this.loggedUser = true
+  //       this.logged.emit(this.loggedUser)
+  //       break;
+  //     }
+  //   }
+  //   return this.found = false;
+  // }
 
 }

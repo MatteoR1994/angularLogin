@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { User } from '../model/user';
 
 @Injectable({
@@ -7,21 +8,14 @@ import { User } from '../model/user';
 })
 export class ApiService {
 
- private readonly API_URL='https://6229de55be12fc4538aa6c8e.mockapi.io/users';
+  private readonly API_URL = 'https://62334515a3d0e4ac0bde7bd0.mockapi.io/users';
 
- public allUsers:User[]=[];
+  public loginState$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
 
-  constructor( private http:HttpClient) { 
+  constructor(private http: HttpClient) { }
 
-   this.getUsers();
-
+  checkUserLogin(userData: any): Observable<User[]> {
+    return this.http.get<User[]>(this.API_URL + '?username=' + userData.username);
   }
-
-  
-getUsers(){
-
-  this.http.get<User[]>(this.API_URL ).subscribe(users => this.allUsers=users);
-
-}
 
 }

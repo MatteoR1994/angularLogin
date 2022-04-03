@@ -1,1 +1,86 @@
-<p>register-page works!</p>
+<div class="container">
+
+    <div class="form-container">
+        <div class="row-fields-container form title-bottom-padding">
+            <h2 class="form-title">Registrati</h2>
+            <h5 class="form-subtitle">i campi con * sono obbligatori</h5>
+        </div>
+
+        <form class="form" [formGroup]="registerForm" (ngSubmit)="submit()">
+            <div class="row-fields-container">
+                <div class="field-container">
+                    <mat-form-field appearance="fill">
+                        <mat-label>Username</mat-label>
+                        <input matInput formControlName="username" id="username" type="text">
+                    </mat-form-field>
+                    <div *ngIf="f['username'].touched && f['username'].invalid">
+                        <mat-error *ngIf="f['username'].errors && f['username'].errors['required']">L'username è
+                            obbligatorio.</mat-error>
+                    </div>
+                </div>
+                <div class="field-container">
+                    <mat-form-field appearance="fill">
+                        <mat-label>Password</mat-label>
+                        <input matInput formControlName="password" id="password" type="password" [type]="showPassword ? 'text' : 'password'">
+                        <mat-icon matSuffix (click)="togglePasswordVisibility()">
+                            {{showPassword?'visibility_off':'visibility'}}
+                        </mat-icon>
+                    </mat-form-field>
+                    <div *ngIf="f['password'].touched && f['password'].invalid">
+                        <mat-error *ngIf="f['password'].errors && f['password'].errors['required']">La password è
+                            obbligatoria.</mat-error>
+                            <mat-error *ngIf="f['password'].errors && f['password'].errors['pattern']">La password deve contenere:
+                                <br>- Uno di questi caratteri: !@#\$%\^&\*;
+                                <br>- Una lettera maiuscola;
+                                <br>- Una lettera minuscola;
+                                <br>- Deve essere almeno 8 caratteri.</mat-error>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row-fields-container">
+                <div class="field-container">
+                    <mat-form-field appearance="fill">
+                        <mat-label>Repeat password</mat-label>
+                        <input matInput formControlName="repeatpassword" id="repeatpassword" type="text" [type]="showPassword ? 'text' : 'password'">
+                        <mat-icon matSuffix (click)="togglePasswordVisibility()">
+                            {{showPassword?'visibility_off':'visibility'}}
+                        </mat-icon>
+                    </mat-form-field>
+                    <div *ngIf="f['repeatpassword'].touched && f['repeatpassword'].invalid">
+                        <mat-error *ngIf="f['repeatpassword'].errors && f['repeatpassword'].errors['required']">La mail è obbligatoria.</mat-error>
+                        <mat-error *ngIf="f['repeatpassword'].errors && f['repeatpassword'].errors['confirmedValidator']">Password and Confirm Password must be match.</mat-error>
+                    </div>
+                </div>
+                <div class="field-container">
+                    <mat-form-field appearance="fill">
+                        <mat-label>Email</mat-label>
+                        <input matInput formControlName="mail" id="mail" type="text">
+                    </mat-form-field>
+                    <div *ngIf="f['mail'].touched && f['mail'].invalid">
+                        <mat-error *ngIf="f['mail'].errors && f['mail'].errors['required']">La mail è obbligatoria.</mat-error>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row-fields-container">
+                <div class="field-container">
+                    <mat-form-field appearance="fill">
+                        <mat-label>Data di nascita</mat-label>
+                        <input matInput formControlName="dob" id="dob" type="date">
+                    </mat-form-field>
+                    <div *ngIf="f['dob'].touched && f['dob'].invalid">
+                        <mat-error *ngIf="f['dob'].errors && f['dob'].errors['required']">La data di nascita è obbligatoria.</mat-error>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row-fields-container">
+                <button mat-raised-button class="submitButton" color="primary" [disabled]="registerForm.invalid"
+                    type="submit">REGISTRATI</button>
+            </div>
+
+        </form>
+    </div>
+
+</div>
