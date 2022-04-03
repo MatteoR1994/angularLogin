@@ -1,6 +1,6 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { BehaviorSubject, map, Observable } from 'rxjs';
 import { User } from '../model/user';
 
 @Injectable({
@@ -16,6 +16,17 @@ export class ApiService {
 
   checkUserLogin(userData: any): Observable<User[]> {
     return this.http.get<User[]>(this.API_URL + '?username=' + userData.username);
+  }
+
+  searchUSernamePResence(userData: any): Observable<User[]> {
+    return this.http.get<User[]>(this.API_URL + '?username=' + userData.username).pipe(
+      map((users) => users.filter((user:any) => user.username === userData.username))
+    );
+  }
+
+  addNewUSer(user: User) {
+    const httpOptions = {headers: new HttpHeaders({"Content-Type": "application/json"})}
+    return this.http.post<User>(this.API_URL, user, httpOptions);
   }
 
 }

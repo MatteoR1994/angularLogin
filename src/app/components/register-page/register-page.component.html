@@ -12,10 +12,14 @@
                     <mat-form-field appearance="fill">
                         <mat-label>Username</mat-label>
                         <input matInput formControlName="username" id="username" type="text">
+                        
                     </mat-form-field>
                     <div *ngIf="f['username'].touched && f['username'].invalid">
                         <mat-error *ngIf="f['username'].errors && f['username'].errors['required']">L'username è
                             obbligatorio.</mat-error>
+                    </div>
+                    <div *ngIf="present">
+                        <mat-error>Username non disponibile</mat-error>
                     </div>
                 </div>
                 <div class="field-container">
