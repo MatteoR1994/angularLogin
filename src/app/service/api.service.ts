@@ -40,14 +40,8 @@ export class ApiService {
     this.user = undefined;
   }
 
-  searchUSernamePResence(userData: any): Observable<User[]> {
-    return this.http.get<User[]>(this.API_URL + '?username=' + userData.username).pipe(
-      map((users) => users.filter((user:any) => user.username === userData.username))
-    );
-  }
-
-  addNewUSer(user: User) {
-    const httpOptions = {headers: new HttpHeaders({"Content-Type": "application/json"})}
+  addNewUSer(user: User): Observable<User> {
+    const httpOptions = {headers: new HttpHeaders({"Content-Type": "application/json"})};
     return this.http.post<User>(this.API_URL, user, httpOptions);
   }
 

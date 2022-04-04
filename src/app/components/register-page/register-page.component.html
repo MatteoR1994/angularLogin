@@ -1,24 +1,20 @@
 <div class="container">
-
     <div class="form-container">
         <div class="row-fields-container form title-bottom-padding">
             <h2 class="form-title">Registrati</h2>
             <h5 class="form-subtitle">i campi con * sono obbligatori</h5>
         </div>
-
-        <form class="form" [formGroup]="registerForm" (ngSubmit)="submit()">
+        <form class="form" [formGroup]="registerForm" (ngSubmit)="register()">
             <div class="row-fields-container">
                 <div class="field-container">
                     <mat-form-field appearance="fill">
                         <mat-label>Username</mat-label>
                         <input matInput formControlName="username" id="username" type="text">
-                        
                     </mat-form-field>
-                    <div *ngIf="f['username'].touched && f['username'].invalid">
-                        <mat-error *ngIf="f['username'].errors && f['username'].errors['required']">L'username è
-                            obbligatorio.</mat-error>
+                    <div *ngIf="registerForm.controls['username'].touched && registerForm.controls['username'].invalid">
+                        <mat-error *ngIf="registerForm.controls['username'].errors && registerForm.controls['username'].errors['required']">L'username è obbligatorio.</mat-error>
                     </div>
-                    <div *ngIf="present">
+                    <div *ngIf="usernameExists">
                         <mat-error>Username non disponibile</mat-error>
                     </div>
                 </div>
@@ -30,18 +26,19 @@
                             {{showPassword?'visibility_off':'visibility'}}
                         </mat-icon>
                     </mat-form-field>
-                    <div *ngIf="f['password'].touched && f['password'].invalid">
-                        <mat-error *ngIf="f['password'].errors && f['password'].errors['required']">La password è
-                            obbligatoria.</mat-error>
-                            <mat-error *ngIf="f['password'].errors && f['password'].errors['pattern']">La password deve contenere:
+                    <div *ngIf="registerForm.controls['password'].touched && registerForm.controls['password'].invalid">
+                        <mat-error *ngIf="registerForm.controls['password'].errors && registerForm.controls['password'].errors['required']">La password è obbligatoria.</mat-error>
+                            <!-- <mat-error *ngIf="registerForm.controls['password'].errors && registerForm.controls['password'].errors['pattern']">La password deve contenere:
                                 <br>- Uno di questi caratteri: !@#\$%\^&\*;
                                 <br>- Una lettera maiuscola;
                                 <br>- Una lettera minuscola;
-                                <br>- Deve essere almeno 8 caratteri.</mat-error>
+                                <br>- Deve essere almeno 8 caratteri.</mat-error> -->
+                    </div>
+                    <div *ngIf="passwordInvalidMessages.length > 0">
+                        <mat-error *ngFor="let error of passwordInvalidMessages">{{error}}</mat-error>
                     </div>
                 </div>
             </div>
-
             <div class="row-fields-container">
                 <div class="field-container">
                     <mat-form-field appearance="fill">
@@ -51,9 +48,13 @@
                             {{showPassword?'visibility_off':'visibility'}}
                         </mat-icon>
                     </mat-form-field>
-                    <div *ngIf="f['repeatpassword'].touched && f['repeatpassword'].invalid">
-                        <mat-error *ngIf="f['repeatpassword'].errors && f['repeatpassword'].errors['required']">La mail è obbligatoria.</mat-error>
-                        <mat-error *ngIf="f['repeatpassword'].errors && f['repeatpassword'].errors['confirmedValidator']">Password and Confirm Password must be match.</mat-error>
+                    <div *ngIf="registerForm.controls['repeatpassword'].touched && registerForm.controls['repeatpassword'].invalid">
+                        <mat-error *ngIf="registerForm.controls['repeatpassword'].errors && registerForm.controls['repeatpassword'].errors['required']">La mail è obbligatoria.</mat-error>
+                        <!-- <mat-error *ngIf="registerForm.controls['repeatpassword'].errors && registerForm.controls['repeatpassword'].errors['confirmedValidator']">Password and Confirm Password must be match.</mat-error> -->
+
+                    </div>
+                    <div *ngIf="passwordNotSame">
+                        <mat-error>Le password devono coincidere.</mat-error>
                     </div>
                 </div>
                 <div class="field-container">
@@ -61,30 +62,27 @@
                         <mat-label>Email</mat-label>
                         <input matInput formControlName="mail" id="mail" type="text">
                     </mat-form-field>
-                    <div *ngIf="f['mail'].touched && f['mail'].invalid">
-                        <mat-error *ngIf="f['mail'].errors && f['mail'].errors['required']">La mail è obbligatoria.</mat-error>
+                    <div *ngIf="registerForm.controls['mail'].touched && registerForm.controls['mail'].invalid">
+                        <mat-error *ngIf="registerForm.controls['mail'].errors && registerForm.controls['mail'].errors['required']">La mail è obbligatoria.</mat-error>
                     </div>
                 </div>
             </div>
-
             <div class="row-fields-container">
                 <div class="field-container">
                     <mat-form-field appearance="fill">
-                        <mat-label>Data di nascita</mat-label>
-                        <input matInput formControlName="dob" id="dob" type="date">
-                    </mat-form-field>
-                    <div *ngIf="f['dob'].touched && f['dob'].invalid">
-                        <mat-error *ngIf="f['dob'].errors && f['dob'].errors['required']">La data di nascita è obbligatoria.</mat-error>
+                        <mat-label>Choose a date</mat-label>
+                        <input id="dob" formControlName="dob" matInput [matDatepicker]="picker">
+                        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                        <mat-datepicker #picker></mat-datepicker>
+                      </mat-form-field>
+                    <div *ngIf="registerForm.controls['dob'].touched && registerForm.controls['dob'].invalid">
+                        <mat-error *ngIf="registerForm.controls['dob'].errors && registerForm.controls['dob'].errors['required']">La data di nascita è obbligatoria.</mat-error>
                     </div>
                 </div>
             </div>
-
             <div class="row-fields-container">
-                <button mat-raised-button class="submitButton" color="primary" [disabled]="registerForm.invalid"
-                    type="submit">REGISTRATI</button>
+                <button mat-raised-button class="submitButton" color="primary" [disabled]="registerForm.invalid" type="submit">REGISTRATI</button>
             </div>
-
         </form>
     </div>
-
 </div>
