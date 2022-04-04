@@ -10,11 +10,6 @@ import { ApiService } from 'src/app/service/api.service';
 })
 export class LoginPageComponent implements OnInit {
 
-  // public loginData = { username: '', password: '' };
-  // public found: boolean = true;
-  // public loggedUser: boolean = false
-  // @Output() logged: EventEmitter<boolean> = new EventEmitter();
-
   public logged: boolean = true;
 
   public loginForm = new FormGroup({
@@ -27,12 +22,8 @@ export class LoginPageComponent implements OnInit {
   ngOnInit(): void {
 
   }
-
-  get f(){
-    return this.loginForm.controls;
-  }
   
-  submit(){
+  login(){
     this.api.checkUserLogin(this.loginForm.value).subscribe({
       next: res => {
         const user = res.find((a: any) => {
@@ -53,17 +44,5 @@ export class LoginPageComponent implements OnInit {
       }
     });
   }
-
-  // submit() {
-  //   for (const user of this.api.allUsers) {
-  //     if (user.username === this.loginData.username && user.password === this.loginData.password) {
-  //       this.router.navigate(['/private']);
-  //       this.loggedUser = true
-  //       this.logged.emit(this.loggedUser)
-  //       break;
-  //     }
-  //   }
-  //   return this.found = false;
-  // }
 
 }

@@ -12,7 +12,30 @@ export class ApiService {
 
   public loginState$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
 
+  public user?: User;
+
+  public isAuth: boolean = false;
+
   constructor(private http: HttpClient) { }
+
+  login(username: string, psw: string): Observable<User | undefined> {
+    return this.http.get<User[]>(this.API_URL + '?username=' + username).pipe(
+      map((users: User[]) => {
+        // for (const user of users) {
+        //   if (user.username === username && user.password === psw) {
+        //     return user;
+        //   }
+        // }
+        // return null;
+        const user = users.find(u => u.username === username && u.password === psw);
+        if (user) {
+          this.user = user;
+          this.isAuth = true;
+        }
+        return user;
+      })
+    );
+  }
 
   checkUserLogin(userData: any): Observable<User[]> {
     return this.http.get<User[]>(this.API_URL + '?username=' + userData.username);

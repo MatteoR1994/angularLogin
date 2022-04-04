@@ -1,37 +1,18 @@
-<!-- <div class="container">
-    <div class="form-container">
-        <h2 class="form-title">Compila il form con i tuoi dati</h2>
-        <mat-form-field class="color-text">
-            <mat-label class="text">Username</mat-label>
-            <input matInput type="text" [(ngModel)]="loginData.username">
-        </mat-form-field>
-        <mat-form-field>
-            <mat-label class="text">Password</mat-label>
-            <input matInput type="password" [(ngModel)]="loginData.password">
-        </mat-form-field>
-        <button (click)="submit()" mat-raised-button class="submitButton" color="primary" type="submit">INVIA</button>
-        <div *ngIf="!found">Non ti ho trovato </div>
-    </div>
-</div> -->
-
 <div class="container">
-
     <div class="form-container">
         <div class="row-fields-container form title-bottom-padding">
             <h2 class="form-title">LOGIN</h2>
             <h5 class="form-subtitle">i campi con * sono obbligatori</h5>
         </div>
-
-        <form class="form" [formGroup]="loginForm" (ngSubmit)="submit()">
+        <form class="form" [formGroup]="loginForm" (ngSubmit)="login()">
             <div class="row-fields-container">
                 <div class="field-container">
                     <mat-form-field appearance="fill">
                         <mat-label>Username</mat-label>
                         <input matInput formControlName="username" id="username" type="text">
                     </mat-form-field>
-                    <div *ngIf="f['username'].touched && f['username'].invalid">
-                        <mat-error *ngIf="f['username'].errors && f['username'].errors['required']">L'username è
-                            obbligatorio.</mat-error>
+                    <div *ngIf="loginForm.controls['username'].touched && loginForm.controls['username'].invalid">
+                        <mat-error *ngIf="loginForm.controls['username'].errors && loginForm.controls['username'].errors['required']">L'username è obbligatorio.</mat-error>
                     </div>
                 </div>
                 <div class="field-container">
@@ -39,27 +20,20 @@
                         <mat-label>Password</mat-label>
                         <input matInput formControlName="password" id="password" type="password">
                     </mat-form-field>
-                    <div *ngIf="f['password'].touched && f['password'].invalid">
-                        <mat-error *ngIf="f['password'].errors && f['password'].errors['required']">La password è
-                            obbligatoria.</mat-error>
+                    <div *ngIf="loginForm.controls['password'].touched && loginForm.controls['password'].invalid">
+                        <mat-error *ngIf="loginForm.controls['password'].errors && loginForm.controls['password'].errors['required']">La password è obbligatoria.</mat-error>
                     </div>
                 </div>
             </div>
-
             <div class="row-fields-container">
-                <button mat-raised-button class="submitButton" color="primary" [disabled]="loginForm.invalid"
-                    type="submit">ACCEDI</button>
+                <button mat-raised-button class="submitButton" color="primary" [disabled]="loginForm.invalid" type="submit">ACCEDI</button>
             </div>
-
             <div class="row-fields-container" *ngIf="!logged">
                 <mat-error>Utente sconosciuto, controlla i dati di accesso.</mat-error>
             </div>
-
             <div class="row-fields-container">
                 Non hai ancora un account? <a href="register">Registrati</a>
             </div>
-
         </form>
     </div>
-
 </div>
