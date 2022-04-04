@@ -10,16 +10,14 @@ import { ApiService } from './service/api.service';
 export class AppComponent implements OnInit {
   title = 'angularLogin';
 
-  public logged: boolean = false;
-
-  constructor(private api: ApiService, private router: Router) { }
+  constructor(public api: ApiService, private router: Router) { }
 
   ngOnInit(): void {
-    this.api.loginState$.subscribe(state => this.logged = state);
+    
   }
 
   logout() {
-    this.api.loginState$.next(false);
+    this.api.logout();
     this.router.navigate(['login']);
   }
 }

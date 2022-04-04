@@ -30,9 +30,6 @@
             <div class="row-fields-container">
                 <button mat-raised-button class="submitButton" color="primary" [disabled]="loginForm.invalid" type="submit">ACCEDI</button>
             </div>
-            <div class="row-fields-container" *ngIf="!logged">
-                <mat-error>Utente sconosciuto, controlla i dati di accesso.</mat-error>
-            </div>
             <div class="row-fields-container">
                 Non hai ancora un account? <a href="register">Registrati</a>
             </div>

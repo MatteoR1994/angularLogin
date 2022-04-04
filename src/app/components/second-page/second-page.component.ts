@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { User } from 'src/app/model/user';
+import { ApiService } from 'src/app/service/api.service';
 
 @Component({
   selector: 'app-second-page',
@@ -7,9 +9,12 @@ import { Component, OnInit } from '@angular/core';
 })
 export class SecondPageComponent implements OnInit {
 
-  constructor() { }
+  public loggedUser?: User;
+
+  constructor(private api: ApiService) { }
 
   ngOnInit(): void {
+    this.loggedUser = this.api.user;
   }
 
 }

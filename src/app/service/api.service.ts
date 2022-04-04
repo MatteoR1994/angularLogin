@@ -10,8 +10,6 @@ export class ApiService {
 
   private readonly API_URL = 'https://62334515a3d0e4ac0bde7bd0.mockapi.io/users';
 
-  public loginState$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
-
   public user?: User;
 
   public isAuth: boolean = false;
@@ -37,8 +35,9 @@ export class ApiService {
     );
   }
 
-  checkUserLogin(userData: any): Observable<User[]> {
-    return this.http.get<User[]>(this.API_URL + '?username=' + userData.username);
+  logout() {
+    this.isAuth = false;
+    this.user = undefined;
   }
 
   searchUSernamePResence(userData: any): Observable<User[]> {
