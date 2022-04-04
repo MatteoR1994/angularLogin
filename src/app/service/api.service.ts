@@ -35,13 +35,22 @@ export class ApiService {
     );
   }
 
+  checkUserPresence(username: string): Observable<User | undefined> {
+    return this.http.get<User[]>(this.API_URL + '?username=' + username).pipe(
+      map((users: User[]) => {
+        const user = users.find(u => u.username === username);
+        return user;
+      })
+    );
+  }
+
   logout() {
     this.isAuth = false;
     this.user = undefined;
   }
 
   addNewUSer(user: User): Observable<User> {
-    const httpOptions = {headers: new HttpHeaders({"Content-Type": "application/json"})};
+    const httpOptions = { headers: new HttpHeaders({ "Content-Type": "application/json" }) };
     return this.http.post<User>(this.API_URL, user, httpOptions);
   }
 

@@ -28,11 +28,10 @@
                     </mat-form-field>
                     <div *ngIf="registerForm.controls['password'].touched && registerForm.controls['password'].invalid">
                         <mat-error *ngIf="registerForm.controls['password'].errors && registerForm.controls['password'].errors['required']">La password è obbligatoria.</mat-error>
-                            <!-- <mat-error *ngIf="registerForm.controls['password'].errors && registerForm.controls['password'].errors['pattern']">La password deve contenere:
-                                <br>- Uno di questi caratteri: !@#\$%\^&\*;
-                                <br>- Una lettera maiuscola;
-                                <br>- Una lettera minuscola;
-                                <br>- Deve essere almeno 8 caratteri.</mat-error> -->
+                        <mat-error *ngIf="registerForm.controls['password'].errors && registerForm.controls['password'].errors['hasCapitalChar']">- La password deve contenere caratteri maiuscoli.</mat-error>
+                        <mat-error *ngIf="registerForm.controls['password'].errors && registerForm.controls['password'].errors['hasLowerChar']">- La password deve contenere caratteri minuscoli.</mat-error>
+                        <mat-error *ngIf="registerForm.controls['password'].errors && registerForm.controls['password'].errors['hasNumberChar']">- La password deve contenere numeri.</mat-error>
+                        <mat-error *ngIf="registerForm.controls['password'].errors && registerForm.controls['password'].errors['hasSpecialChars']">- La password deve contenere uno di questi caratteri !@#\$%\^&\*.</mat-error>
                     </div>
                     <div *ngIf="passwordInvalidMessages.length > 0">
                         <mat-error *ngFor="let error of passwordInvalidMessages">{{error}}</mat-error>
@@ -49,9 +48,8 @@
                         </mat-icon>
                     </mat-form-field>
                     <div *ngIf="registerForm.controls['repeatpassword'].touched && registerForm.controls['repeatpassword'].invalid">
-                        <mat-error *ngIf="registerForm.controls['repeatpassword'].errors && registerForm.controls['repeatpassword'].errors['required']">La mail è obbligatoria.</mat-error>
-                        <!-- <mat-error *ngIf="registerForm.controls['repeatpassword'].errors && registerForm.controls['repeatpassword'].errors['confirmedValidator']">Password and Confirm Password must be match.</mat-error> -->
-
+                        <mat-error *ngIf="registerForm.controls['repeatpassword'].errors && registerForm.controls['repeatpassword'].errors['required']">La password è obbligatoria.</mat-error>
+                        <mat-error *ngIf="registerForm.controls['repeatpassword'].errors && registerForm.controls['repeatpassword'].errors['mustMatch']">Le password devono essere uguali.</mat-error>
                     </div>
                     <div *ngIf="passwordNotSame">
                         <mat-error>Le password devono coincidere.</mat-error>
